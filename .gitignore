@@ -1,0 +1,146 @@
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ============================================
+# Virtual Environments
+# ============================================
+venv/
+env/
+ENV/
+.venv
+conda/
+.conda/
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ============================================
+# Flask / Web App
+# ============================================
+instance/
+.webassets-cache
+*.log
+
+# ============================================
+# SECURITY - API Keys & Secrets
+# NEVER COMMIT THESE!
+# ============================================
+config.json
+.env
+.env.local
+.env.*.local
+*.key
+secrets.json
+credentials.json
+api_keys.txt
+
+# ============================================
+# User Data & Uploads
+# ============================================
+bookmarks.json
+uploads/
+*.pdf
+*.doc
+*.docx
+resume_*.pdf
+user_data/
+
+# ============================================
+# Generated Output Files
+# ============================================
+output/
+*.csv
+# Ignore HTML files except templates
+*.html
+!templates/**/*.html
+*.xlsx
+reports/
+job_matches_*.csv
+job_matches_*.html
+
+# ============================================
+# Data Files (Optional)
+# Uncomment if you want to track mentor files in git
+# ============================================
+# mentors.csv
+# mentors.json
+# mentors_*.csv
+mentor_lookbook*.txt
+mentor_batch*.txt
+companies_overview.txt
+
+# ============================================
+# Temporary & Backup Files
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*~
+
+# ============================================
+# Testing & Coverage
+# ============================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# ============================================
+# Jupyter Notebooks
+# ============================================
+.ipynb_checkpoints
+
+# ============================================
+# Type Checking
+# ============================================
+.mypy_cache/
+.dmypy.json
+dmypy.json

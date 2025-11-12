@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Cross-Reference Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Job Cross-Reference Tool</h1>
+            <p class="subtitle">Match your skills with opportunities using your mentor network</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Search Form -->
+            <div class="card search-card">
+                <h2>Search for Jobs</h2>
+                
+                <!-- Resume Upload Section -->
+                <div class="resume-upload-section">
+                    <label for="resumeUpload" class="resume-upload-label">
+                        📄 Upload Resume (Optional)
+                    </label>
+                    <div class="resume-upload-controls">
+                        <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx" style="display: none;">
+                        <button type="button" class="btn-upload" onclick="document.getElementById('resumeUpload').click()">
+                            Choose Resume File
+                        </button>
+                        <span id="resumeFileName" class="resume-file-name"></span>
+                        <button type="button" class="btn-clear-resume" id="clearResume" style="display: none;">✕</button>
+                    </div>
+                    <small>Upload your resume to auto-fill skills and location</small>
+                </div>
+                
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="skills">Your Current Skills *</label>
+                        <input type="text" id="skills" name="skills" 
+                               placeholder="e.g., Python, JavaScript, React, Full-Stack Development"
+                               required>
+                        <small>Separate skills with commas, or upload resume above</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interests">Your Interests / Future Skills</label>
+                        <input type="text" id="interests" name="interests" 
+                               placeholder="e.g., AI, Machine Learning, Product Management">
+                        <small>What you want to learn or grow into</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Your Location</label>
+                        <input type="text" id="location" name="location" 
+                               placeholder="e.g., Huntsville, AL"
+                               value="Huntsville, AL">
+                        <small>Leave empty for US-wide search only</small>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="us_wide" name="us_wide" checked>
+                            Also search US-wide jobs
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="searchBtn">
+                        <span class="btn-text">🔍 Search Jobs</span>
+                        <span class="btn-loading" style="display: none;">⏳ Searching...</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="card recent-searches-card" id="recentSearchesCard" style="display: none;">
+                <h2>📚 Recent Searches</h2>
+                <div id="recentSearchesList" class="recent-searches-list"></div>
+            </div>
+
+            <!-- Mentor Network Stats -->
+            <div class="card stats-card" id="mentorStats">
+                <h2>Your Mentor Network</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalMentors">-</div>
+                        <div class="stat-label">Mentors</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalCompanies">-</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalSkills">-</div>
+                        <div class="stat-label">Expertise Areas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookmarks Section -->
+            <div class="card bookmarks-card" id="bookmarksCard" style="display: none;">
+                <div class="bookmarks-header">
+                    <h2>⭐ Saved Jobs</h2>
+                    <button class="btn-small" id="toggleBookmarks">Show</button>
+                </div>
+                <div id="bookmarksList" class="bookmarks-list" style="display: none;"></div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="card results-card" id="resultsCard" style="display: none;">
+                <div class="results-header">
+                    <h2>Search Results</h2>
+                    <div class="results-stats" id="resultsStats"></div>
+                </div>
+
+                <div class="filters">
+                    <input type="text" id="searchFilter" placeholder="🔍 Filter jobs by title or company...">
+                    <select id="locationFilter">
+                        <option value="all">All Locations</option>
+                        <option value="local">Local Jobs Only</option>
+                        <option value="remote">Remote Only</option>
+                    </select>
+                    <select id="sortFilter">
+                        <option value="score-desc">Match Score (High to Low)</option>
+                        <option value="score-asc">Match Score (Low to High)</option>
+                        <option value="title-asc">Title (A-Z)</option>
+                        <option value="company-asc">Company (A-Z)</option>
+                        <option value="location-asc">Location (A-Z)</option>
+                    </select>
+                    <select id="scoreFilter">
+                        <option value="all">All Scores</option>
+                        <option value="30">30%+ Match</option>
+                        <option value="50">50%+ Match</option>
+                        <option value="70">70%+ Match</option>
+                    </select>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="mentorFilter">
+                        🤝 Only jobs with mentor connections
+                    </label>
+                </div>
+                <div class="filter-summary" id="filterSummary"></div>
+
+                <div id="jobsList" class="jobs-list"></div>
+
+                <div class="results-footer">
+                    <button class="btn-secondary" id="downloadCsv">📥 Download CSV</button>
+                    <button class="btn-secondary" id="viewHtml">👁️ View HTML Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+
