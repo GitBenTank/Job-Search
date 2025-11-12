@@ -105,11 +105,10 @@ job_matches_*.html
 
 # ============================================
 # Data Files (Optional)
-# Uncomment if you want to track mentor files in git
+# mentors.csv is now included (needed for Railway deployment)
 # ============================================
-# mentors.csv
 # mentors.json
-# mentors_*.csv
+mentors_*.csv
 mentor_lookbook*.txt
 mentor_batch*.txt
 companies_overview.txt

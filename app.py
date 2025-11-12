@@ -514,10 +514,15 @@ def download_report(filename):
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5001))  # Use 5001 to avoid AirPlay conflict
+    # Get port from environment variable (for Railway/Heroku) or default to 5001
+    port = int(os.environ.get('PORT', 5001))
+    # Use 0.0.0.0 for Railway (allows external connections), 127.0.0.1 for local
+    host = '0.0.0.0' if os.environ.get('RAILWAY_ENVIRONMENT') else '127.0.0.1'
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    
     print(f"\n🚀 Starting Job Cross-Reference Web App...")
     print(f"🌐 Open your browser to: http://localhost:{port}")
     print(f"📊 Your mentor network: 91 mentors ready")
     print(f"\nPress Ctrl+C to stop the server\n")
-    app.run(debug=True, port=port, host='127.0.0.1')
+    app.run(debug=debug, port=port, host=host)
 
