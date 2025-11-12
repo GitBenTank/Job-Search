@@ -14,11 +14,29 @@ import re
 
 app = Flask(__name__)
 
-# Load API keys from config
+# Load API keys from config or environment variables
 def load_api_keys():
-    """Load API keys from config.json"""
-    config_path = Path(__file__).parent / 'config.json'
+    """Load API keys from environment variables (Railway) or config.json (local)"""
     api_keys = {}
+    
+    # First, try environment variables (Railway/Heroku)
+    adzuna_app_id = os.environ.get('ADZUNA_APP_ID', '')
+    adzuna_app_key = os.environ.get('ADZUNA_APP_KEY', '')
+    
+    # Debug logging (don't log actual keys)
+    if adzuna_app_id or adzuna_app_key:
+        print(f"✓ Found env vars: ADZUNA_APP_ID={'SET' if adzuna_app_id else 'NOT SET'}, ADZUNA_APP_KEY={'SET' if adzuna_app_key else 'NOT SET'}")
+    else:
+        print("⚠ Environment variables ADZUNA_APP_ID and ADZUNA_APP_KEY not found")
+    
+    if adzuna_app_id and adzuna_app_key:
+        api_keys['adzuna_app_id'] = adzuna_app_id
+        api_keys['adzuna_app_key'] = adzuna_app_key
+        print("✓ Using API keys from environment variables")
+        return api_keys
+    
+    # Fallback to config.json (local development)
+    config_path = Path(__file__).parent / 'config.json'
     if config_path.exists():
         try:
             with open(config_path, 'r') as f:
@@ -28,6 +46,7 @@ def load_api_keys():
                     api_keys['adzuna_app_key'] = config['adzuna'].get('app_key', '')
         except Exception as e:
             print(f"Error loading config: {e}")
+    
     return api_keys if api_keys else None
 
 
